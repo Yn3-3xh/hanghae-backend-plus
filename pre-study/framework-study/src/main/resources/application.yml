@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: framework-study
+
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/framework_study
+    username: yn3
+    password: yn3!@#
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+jwt:
+  secret: 3ca12b9e7273803c5658c477d13a512c9257ef53e573f8da977bc47baa3105c0 # openssl rand -hex 32
