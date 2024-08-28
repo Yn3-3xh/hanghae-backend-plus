@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'org.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    /* JUnit 4 */
+    implementation 'org.junit.platform:junit-platform-launcher'
+    implementation 'junit:junit:4.13.2'
+    implementation 'org.junit.vintage:junit-vintage-engine:5.9.3'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.3'
+
+    /* Jetty */
+    implementation 'org.eclipse.jetty:jetty-server:11.0.15'
+    implementation 'org.eclipse.jetty:jetty-servlet:11.0.15'
+    implementation 'org.eclipse.jetty:jetty-io:11.0.15'
+    implementation 'org.eclipse.jetty:jetty-util:11.0.15'
+    implementation 'org.eclipse.jetty:jetty-http:11.0.15'
+
+    /* Arquillian */
+    testImplementation 'org.jboss.arquillian.junit:arquillian-junit-core:1.8.0.Final'
+    testImplementation 'org.jboss.arquillian.junit:arquillian-junit-container:1.8.0.Final'
+    /* CDI */
+    testImplementation 'org.jboss.weld.se:weld-se-core:3.1.7.Final'
+
+}
+
+test {
+    useJUnitPlatform {
+        includeTags 'individual'
+        excludeTags 'repository'
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
