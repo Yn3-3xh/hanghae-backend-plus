@@ -6,7 +6,7 @@ import org.example.frameworkstudy.auth.entity.AuthMember;
 import org.example.frameworkstudy.auth.dto.AuthRequestDto;
 import org.example.frameworkstudy.auth.service.AuthService;
 import org.example.frameworkstudy.auth.token.JwtProvider;
-import org.example.frameworkstudy.common.entity.JwtToken;
+import org.example.frameworkstudy.auth.token.JwtToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,7 +34,6 @@ public class AuthServiceImpl implements AuthService {
     private Authentication authenticationMember(AuthRequestDto authRequestDto) {
         String name = authRequestDto.getName();
         String rawPassword = authRequestDto.getPassword();
-
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(name, rawPassword);
 
         return authenticationManager.authenticate(authenticationToken);

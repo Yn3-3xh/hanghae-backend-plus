@@ -1,4 +1,4 @@
-package org.example.frameworkstudy.common.entity;
+package org.example.frameworkstudy.auth.token;
 
 import lombok.Builder;
 import lombok.Getter;

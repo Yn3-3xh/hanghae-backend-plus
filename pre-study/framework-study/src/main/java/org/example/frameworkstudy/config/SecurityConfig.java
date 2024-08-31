@@ -1,4 +1,4 @@
-package org.example.frameworkstudy.config.security;
+package org.example.frameworkstudy.config;
 
 import lombok.RequiredArgsConstructor;
 import org.example.frameworkstudy.auth.token.JwtAuthenticationFilter;
