@@ -6,10 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.frameworkstudy.shop.category.domain.DetailCategory;
-import org.example.frameworkstudy.shop.product.dto.RequestProductDto;
+import org.example.frameworkstudy.shop.product.dto.ProductRequestDto;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -77,7 +76,7 @@ public class Product {
         this.detailCategory = detailCategory;
     }
 
-    public void update(RequestProductDto requestProductDto) {
+    public void update(ProductRequestDto requestProductDto) {
         this.name = requestProductDto.getName();
         this.price = requestProductDto.getPrice();
         this.count = requestProductDto.getCount();

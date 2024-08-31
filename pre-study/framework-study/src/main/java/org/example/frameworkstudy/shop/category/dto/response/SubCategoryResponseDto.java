@@ -8,20 +8,20 @@ import org.example.frameworkstudy.shop.category.domain.SubCategory;
 @Getter
 @Setter
 @Builder
-public class ResponseSubCategoryDto {
+public class SubCategoryResponseDto {
 
     private Long id;
     private String name;
     private String manager;
 
-    private ResponseCategoryDto responseCategoryDto;
+    private CategoryResponseDto categoryResponseDto;
 
-    public static ResponseSubCategoryDto ofSubCategory(SubCategory subCategory) {
-        return ResponseSubCategoryDto.builder()
+    public static SubCategoryResponseDto ofSubCategory(SubCategory subCategory) {
+        return SubCategoryResponseDto.builder()
                 .id(subCategory.getId())
                 .name(subCategory.getName())
                 .manager(subCategory.getManager())
-                .responseCategoryDto(ResponseCategoryDto.ofCategory(subCategory.getCategory()))
+                .categoryResponseDto(CategoryResponseDto.ofCategory(subCategory.getCategory()))
                 .build();
     }
 }

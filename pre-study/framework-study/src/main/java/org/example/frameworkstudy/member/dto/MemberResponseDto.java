@@ -9,14 +9,14 @@ import org.example.frameworkstudy.member.domain.MemberStatus;
 @Getter
 @Setter
 @Builder
-public class ResponseMemberDto {
+public class MemberResponseDto {
 
     private Long id;
     private String name;
     private MemberStatus memberStatus;
 
-    public static ResponseMemberDto ofMember(Member member) {
-        return ResponseMemberDto.builder()
+    public static MemberResponseDto ofMember(Member member) {
+        return MemberResponseDto.builder()
                 .id(member.getId())
                 .name(member.getName())
                 .memberStatus(member.getMemberStatus())

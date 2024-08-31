@@ -1,9 +1,9 @@
 package org.example.frameworkstudy.shop.category.service;
 
-import org.example.frameworkstudy.shop.category.dto.request.RequestDetailCategoryDto;
-import org.example.frameworkstudy.shop.category.dto.response.ResponseDetailCategoryDto;
+import org.example.frameworkstudy.shop.category.dto.request.DetailCategoryRequestDto;
+import org.example.frameworkstudy.shop.category.dto.response.DetailCategoryResponseDto;
 
 public interface DetailCategoryService {
 
-    ResponseDetailCategoryDto createDetailCategory(RequestDetailCategoryDto requestDetailCategoryDto);
+    DetailCategoryResponseDto createDetailCategory(DetailCategoryRequestDto detailCategoryRequestDto);
 }

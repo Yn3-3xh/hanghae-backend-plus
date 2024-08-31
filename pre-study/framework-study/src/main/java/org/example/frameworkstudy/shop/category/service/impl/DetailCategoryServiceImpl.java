@@ -3,8 +3,8 @@ package org.example.frameworkstudy.shop.category.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.frameworkstudy.shop.category.domain.DetailCategory;
 import org.example.frameworkstudy.shop.category.domain.SubCategory;
-import org.example.frameworkstudy.shop.category.dto.request.RequestDetailCategoryDto;
-import org.example.frameworkstudy.shop.category.dto.response.ResponseDetailCategoryDto;
+import org.example.frameworkstudy.shop.category.dto.request.DetailCategoryRequestDto;
+import org.example.frameworkstudy.shop.category.dto.response.DetailCategoryResponseDto;
 import org.example.frameworkstudy.shop.category.repository.DetailCategoryRepository;
 import org.example.frameworkstudy.shop.category.repository.SubCategoryRepository;
 import org.example.frameworkstudy.shop.category.service.DetailCategoryService;
@@ -20,20 +20,20 @@ public class DetailCategoryServiceImpl implements DetailCategoryService {
 
     @Override
     @Transactional
-    public ResponseDetailCategoryDto createDetailCategory(RequestDetailCategoryDto requestDetailCategoryDto) {
-        validateCreateRequest(requestDetailCategoryDto);
+    public DetailCategoryResponseDto createDetailCategory(DetailCategoryRequestDto detailCategoryRequestDto) {
+        validateCreateRequest(detailCategoryRequestDto);
 
-        SubCategory subCategory = findSubCategory(requestDetailCategoryDto.getSubCategoryId());
-        DetailCategory detailCategory = createSubCategoryFromDto(requestDetailCategoryDto, subCategory);
-        return ResponseDetailCategoryDto.ofDetailCategory(detailCategory);
+        SubCategory subCategory = findSubCategory(detailCategoryRequestDto.getSubCategoryId());
+        DetailCategory detailCategory = createSubCategoryFromDto(detailCategoryRequestDto, subCategory);
+        return DetailCategoryResponseDto.ofDetailCategory(detailCategory);
     }
 
-    private void validateCreateRequest(RequestDetailCategoryDto requestDetailCategoryDto) {
-        if (requestDetailCategoryDto.getSubCategoryId() == null) {
+    private void validateCreateRequest(DetailCategoryRequestDto detailCategoryRequestDto) {
+        if (detailCategoryRequestDto.getSubCategoryId() == null) {
             throw new IllegalArgumentException("ID must not be null.");
         }
 
-        checkDetailCategoryNameDuplicated(requestDetailCategoryDto.getName());
+        checkDetailCategoryNameDuplicated(detailCategoryRequestDto.getName());
     }
 
     private void checkDetailCategoryNameDuplicated(String detailCategoryName) {
@@ -48,8 +48,8 @@ public class DetailCategoryServiceImpl implements DetailCategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid sub category id : " + subCategoryId));
     }
 
-    private DetailCategory createSubCategoryFromDto(RequestDetailCategoryDto requestDetailCategoryDto, SubCategory subCategory) {
-        DetailCategory detailCategory = requestDetailCategoryDto.toDetailCategory(subCategory);
+    private DetailCategory createSubCategoryFromDto(DetailCategoryRequestDto detailCategoryRequestDto, SubCategory subCategory) {
+        DetailCategory detailCategory = detailCategoryRequestDto.toDetailCategory(subCategory);
         return detailCategoryRepository.save(detailCategory);
     }
 }

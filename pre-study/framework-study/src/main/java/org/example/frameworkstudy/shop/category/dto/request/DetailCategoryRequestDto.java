@@ -2,25 +2,25 @@ package org.example.frameworkstudy.shop.category.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.frameworkstudy.shop.category.domain.Category;
+import org.example.frameworkstudy.shop.category.domain.DetailCategory;
 import org.example.frameworkstudy.shop.category.domain.SubCategory;
 
 @Getter
 @Setter
-public class RequestSubCategoryDto {
+public class DetailCategoryRequestDto {
 
     private Long id;
     private String name;
     private String manager;
 
-    private Long categoryId;
+    private Long subCategoryId;
 
-    public SubCategory toSubCategory(Category category) {
-        return SubCategory.builder()
+    public DetailCategory toDetailCategory(SubCategory subCategory) {
+        return DetailCategory.builder()
                 .id(this.id)
                 .name(this.name)
                 .manager(this.manager)
-                .category(category)
+                .subCategory(subCategory)
                 .build();
     }
 }

@@ -3,14 +3,13 @@ package org.example.frameworkstudy.shop.product.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.frameworkstudy.shop.category.domain.DetailCategory;
-import org.example.frameworkstudy.shop.category.dto.response.ResponseDetailCategoryDto;
+import org.example.frameworkstudy.shop.category.dto.response.DetailCategoryResponseDto;
 import org.example.frameworkstudy.shop.product.domain.Product;
 
 @Getter
 @Setter
 @Builder
-public class ResponseProductDto {
+public class ProductResponseDto {
     private Long id;
     private String name;
     private int price;
@@ -18,18 +17,18 @@ public class ResponseProductDto {
     private String contents;
     private String manager;
 
-    private ResponseDetailCategoryDto responseDetailCategoryDto;
+    private DetailCategoryResponseDto detailCategoryResponseDto;
 
     @Builder
-    public static ResponseProductDto ofProduct(Product product) {
-        return ResponseProductDto.builder()
+    public static ProductResponseDto ofProduct(Product product) {
+        return ProductResponseDto.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
                 .count(product.getCount())
                 .contents(product.getContents())
                 .manager(product.getManager())
-                .responseDetailCategoryDto(ResponseDetailCategoryDto.ofDetailCategory(product.getDetailCategory()))
+                .detailCategoryResponseDto(DetailCategoryResponseDto.ofDetailCategory(product.getDetailCategory()))
                 .build();
     }
 }

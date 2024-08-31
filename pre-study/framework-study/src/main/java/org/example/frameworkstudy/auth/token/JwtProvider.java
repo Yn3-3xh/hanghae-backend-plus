@@ -1,4 +1,4 @@
-package org.example.frameworkstudy.config.security;
+package org.example.frameworkstudy.auth.token;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

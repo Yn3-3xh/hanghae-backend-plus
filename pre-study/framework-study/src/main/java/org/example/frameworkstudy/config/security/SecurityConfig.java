@@ -1,6 +1,8 @@
 package org.example.frameworkstudy.config.security;
 
 import lombok.RequiredArgsConstructor;
+import org.example.frameworkstudy.auth.token.JwtAuthenticationFilter;
+import org.example.frameworkstudy.auth.token.JwtProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

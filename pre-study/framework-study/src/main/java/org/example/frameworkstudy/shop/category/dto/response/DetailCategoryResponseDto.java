@@ -8,20 +8,20 @@ import org.example.frameworkstudy.shop.category.domain.DetailCategory;
 @Getter
 @Setter
 @Builder
-public class ResponseDetailCategoryDto {
+public class DetailCategoryResponseDto {
 
     private Long id;
     private String name;
     private String manager;
 
-    private ResponseSubCategoryDto responseSubCategoryDto;
+    private SubCategoryResponseDto subCategoryResponseDto;
 
-    public static ResponseDetailCategoryDto ofDetailCategory(DetailCategory detailCategory) {
-        return ResponseDetailCategoryDto.builder()
+    public static DetailCategoryResponseDto ofDetailCategory(DetailCategory detailCategory) {
+        return DetailCategoryResponseDto.builder()
                 .id(detailCategory.getId())
                 .name(detailCategory.getName())
                 .manager(detailCategory.getManager())
-                .responseSubCategoryDto(ResponseSubCategoryDto.ofSubCategory(detailCategory.getSubCategory()))
+                .subCategoryResponseDto(SubCategoryResponseDto.ofSubCategory(detailCategory.getSubCategory()))
                 .build();
     }
 }

@@ -5,8 +5,8 @@ import org.example.frameworkstudy.shop.category.domain.Category;
 import org.example.frameworkstudy.shop.category.repository.CategoryRepository;
 import org.example.frameworkstudy.shop.category.service.SubCategoryService;
 import org.example.frameworkstudy.shop.category.domain.SubCategory;
-import org.example.frameworkstudy.shop.category.dto.request.RequestSubCategoryDto;
-import org.example.frameworkstudy.shop.category.dto.response.ResponseSubCategoryDto;
+import org.example.frameworkstudy.shop.category.dto.request.SubCategoryRequestDto;
+import org.example.frameworkstudy.shop.category.dto.response.SubCategoryResponseDto;
 import org.example.frameworkstudy.shop.category.repository.SubCategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,20 +20,20 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
     @Override
     @Transactional
-    public ResponseSubCategoryDto createSubCategory(RequestSubCategoryDto requestSubCategoryDto) {
-        validateCreateRequest(requestSubCategoryDto);
+    public SubCategoryResponseDto createSubCategory(SubCategoryRequestDto subCategoryRequestDto) {
+        validateCreateRequest(subCategoryRequestDto);
 
-        Category category = findCategory(requestSubCategoryDto.getCategoryId());
-        SubCategory subCategory = createSubCategoryFromDto(requestSubCategoryDto, category);
-        return ResponseSubCategoryDto.ofSubCategory(subCategory);
+        Category category = findCategory(subCategoryRequestDto.getCategoryId());
+        SubCategory subCategory = createSubCategoryFromDto(subCategoryRequestDto, category);
+        return SubCategoryResponseDto.ofSubCategory(subCategory);
     }
 
-    private void validateCreateRequest(RequestSubCategoryDto requestSubCategoryDto) {
-        if (requestSubCategoryDto.getCategoryId() == null) {
+    private void validateCreateRequest(SubCategoryRequestDto subCategoryRequestDto) {
+        if (subCategoryRequestDto.getCategoryId() == null) {
             throw new IllegalArgumentException("ID must not be null.");
         }
 
-        checkSubCategoryNameDuplicated(requestSubCategoryDto.getName());
+        checkSubCategoryNameDuplicated(subCategoryRequestDto.getName());
     }
 
     private void checkSubCategoryNameDuplicated(String subCategoryName) {
@@ -48,8 +48,8 @@ public class SubCategoryServiceImpl implements SubCategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category id : " + categoryId));
     }
 
-    private SubCategory createSubCategoryFromDto(RequestSubCategoryDto requestSubCategoryDto, Category category) {
-        SubCategory subCategory = requestSubCategoryDto.toSubCategory(category);
+    private SubCategory createSubCategoryFromDto(SubCategoryRequestDto subCategoryRequestDto, Category category) {
+        SubCategory subCategory = subCategoryRequestDto.toSubCategory(category);
         return subCategoryRepository.save(subCategory);
     }
 }

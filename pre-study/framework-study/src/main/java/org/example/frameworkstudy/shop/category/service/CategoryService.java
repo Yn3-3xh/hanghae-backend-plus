@@ -1,10 +1,10 @@
 package org.example.frameworkstudy.shop.category.service;
 
-import org.example.frameworkstudy.shop.category.dto.request.RequestCategoryDto;
-import org.example.frameworkstudy.shop.category.dto.response.ResponseCategoryDto;
+import org.example.frameworkstudy.shop.category.dto.request.CategoryRequestDto;
+import org.example.frameworkstudy.shop.category.dto.response.CategoryResponseDto;
 
 public interface CategoryService {
 
-    ResponseCategoryDto createCategory(RequestCategoryDto requestCategoryDto);
+    CategoryResponseDto createCategory(CategoryRequestDto categoryRequestDto);
 
 }

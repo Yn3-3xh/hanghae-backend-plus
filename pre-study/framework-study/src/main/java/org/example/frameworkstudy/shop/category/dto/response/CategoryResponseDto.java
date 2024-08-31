@@ -8,14 +8,14 @@ import org.example.frameworkstudy.shop.category.domain.Category;
 @Getter
 @Setter
 @Builder
-public class ResponseCategoryDto {
+public class CategoryResponseDto {
 
     private Long id;
     private String name;
     private String manager;
 
-    public static ResponseCategoryDto ofCategory(Category category) {
-        return ResponseCategoryDto.builder()
+    public static CategoryResponseDto ofCategory(Category category) {
+        return CategoryResponseDto.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .manager(category.getManager())

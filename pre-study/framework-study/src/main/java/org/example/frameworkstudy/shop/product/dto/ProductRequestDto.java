@@ -7,7 +7,7 @@ import org.example.frameworkstudy.shop.product.domain.Product;
 
 @Getter
 @Setter
-public class RequestProductDto {
+public class ProductRequestDto {
 
     private String name;
     private int price;

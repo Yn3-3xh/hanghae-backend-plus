@@ -1,8 +1,8 @@
 package org.example.frameworkstudy.shop.category.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.frameworkstudy.shop.category.dto.request.RequestDetailCategoryDto;
-import org.example.frameworkstudy.shop.category.dto.response.ResponseDetailCategoryDto;
+import org.example.frameworkstudy.shop.category.dto.request.DetailCategoryRequestDto;
+import org.example.frameworkstudy.shop.category.dto.response.DetailCategoryResponseDto;
 import org.example.frameworkstudy.shop.category.service.DetailCategoryService;
 import org.example.frameworkstudy.common.controller.BaseApiControllerV1;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class DetailCategoryController extends BaseApiControllerV1 {
     private final DetailCategoryService detailCategoryService;
 
     @PostMapping
-    public ResponseDetailCategoryDto createDetailCategory(@RequestBody RequestDetailCategoryDto requestDetailCategoryDto) {
-        return detailCategoryService.createDetailCategory(requestDetailCategoryDto);
+    public DetailCategoryResponseDto createDetailCategory(@RequestBody DetailCategoryRequestDto detailCategoryRequestDto) {
+        return detailCategoryService.createDetailCategory(detailCategoryRequestDto);
     }
 }

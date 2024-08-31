@@ -1,4 +1,4 @@
-package org.example.frameworkstudy.config.security;
+package org.example.frameworkstudy.auth.token;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,7 +17,6 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtProvider jwtProvider;
-
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

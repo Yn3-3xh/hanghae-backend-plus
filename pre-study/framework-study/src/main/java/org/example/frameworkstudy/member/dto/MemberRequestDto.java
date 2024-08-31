@@ -3,11 +3,10 @@ package org.example.frameworkstudy.member.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.frameworkstudy.member.domain.Member;
-import org.example.frameworkstudy.member.domain.MemberStatus;
 
 @Getter
 @Setter
-public class RequestMemberDto {
+public class MemberRequestDto {
 
     private Long id;
     private String name;

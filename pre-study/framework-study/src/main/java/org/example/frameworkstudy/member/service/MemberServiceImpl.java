@@ -1,18 +1,10 @@
 package org.example.frameworkstudy.member.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.frameworkstudy.common.entity.JwtToken;
-import org.example.frameworkstudy.config.security.JwtProvider;
-import org.example.frameworkstudy.member.domain.MemberDetail;
 import org.example.frameworkstudy.member.domain.Member;
 import org.example.frameworkstudy.member.domain.MemberStatus;
-import org.example.frameworkstudy.member.dto.RequestMemberDto;
-import org.example.frameworkstudy.member.dto.ResponseMemberDto;
+import org.example.frameworkstudy.member.dto.MemberRequestDto;
 import org.example.frameworkstudy.member.repository.MemberRepository;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,32 +17,16 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final JwtProvider jwtProvider;
 
     @Override
     @Transactional
-    public void signUp(RequestMemberDto requestMemberDto) {
+    public void signUp(MemberRequestDto requestMemberDto) {
         validateSignUp(requestMemberDto);
 
         registerMemberFromDto(requestMemberDto);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public MemberDetail signIn(RequestMemberDto requestMemberDto) {
-        String name = requestMemberDto.getName();
-        String password = requestMemberDto.getPassword();
-
-        validateLogin(name, password);
-
-        Member member = getMember(name);
-        checkPasswordMatched(password, member.getPassword());
-
-        return getSecurityMember(member, name, password);
-    }
-
-    private void validateSignUp(RequestMemberDto requestMemberDto) {
+    private void validateSignUp(MemberRequestDto requestMemberDto) {
         String password = requestMemberDto.getPassword();
         String validatedPassword = requestMemberDto.getValidatedPassword();
         String name = requestMemberDto.getName();
@@ -138,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
                 });
     }
 
-    private void registerMemberFromDto(RequestMemberDto requestMemberDto) {
+    private void registerMemberFromDto(MemberRequestDto requestMemberDto) {
         Member member = requestMemberDto.toMember();
         encodePassword(member);
         changeMemberStatus(member);
@@ -154,33 +130,4 @@ public class MemberServiceImpl implements MemberService {
         member.changeMemberStatus(MemberStatus.USER);
     }
 
-    private void validateLogin(String name, String password) {
-        checkNameHasValue(name);
-        checkPasswordHasValue(password);
-    }
-
-    private Member getMember(String name) {
-        return memberRepository.findByName(name)
-                .orElseThrow(() -> new UsernameNotFoundException("Member not found"));
-    }
-
-    private void checkPasswordMatched(String inputPassword, String storedPassword) {
-        if (!passwordEncoder.matches(inputPassword, storedPassword)) {
-            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
-        }
-    }
-
-    private MemberDetail getSecurityMember(Member member, String name, String rawPassword) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(name, rawPassword);
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        JwtToken jwtToken = jwtProvider.generateToken(authentication);
-
-        ResponseMemberDto responseMemberDto = ResponseMemberDto.ofMember(member);
-        MemberDetail memberDetail = new MemberDetail(responseMemberDto);
-
-        memberDetail.setAccessToken(jwtToken.getAccessToken());
-        memberDetail.setRefreshToken(jwtToken.getRefreshToken());
-
-        return memberDetail;
-    }
 }

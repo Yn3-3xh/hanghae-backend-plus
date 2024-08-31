@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.frameworkstudy.shop.category.domain.DetailCategory;
 import org.example.frameworkstudy.shop.category.repository.DetailCategoryRepository;
 import org.example.frameworkstudy.shop.product.domain.Product;
-import org.example.frameworkstudy.shop.product.dto.RequestProductDto;
-import org.example.frameworkstudy.shop.product.dto.ResponseProductDto;
+import org.example.frameworkstudy.shop.product.dto.ProductRequestDto;
+import org.example.frameworkstudy.shop.product.dto.ProductResponseDto;
 import org.example.frameworkstudy.shop.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,62 +21,62 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     @Transactional
-    public ResponseProductDto createProduct(RequestProductDto requestProductDto) {
-        validateCreateRequest(requestProductDto);
+    public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
+        validateCreateRequest(productRequestDto);
 
-        DetailCategory detailCategory = findDetailCategory(requestProductDto.getDetailCategoryId());
-        Product product = createProductFromDto(requestProductDto, detailCategory);
-        return ResponseProductDto.ofProduct(product);
+        DetailCategory detailCategory = findDetailCategory(productRequestDto.getDetailCategoryId());
+        Product product = createProductFromDto(productRequestDto, detailCategory);
+        return ProductResponseDto.ofProduct(product);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ResponseProductDto getProduct(Long id) {
+    public ProductResponseDto getProduct(Long id) {
         Product product = findProduct(id);
-        return ResponseProductDto.ofProduct(product);
+        return ProductResponseDto.ofProduct(product);
     }
 
     @Override
     @Transactional
-    public ResponseProductDto updateProduct(Long id, RequestProductDto requestProductDto) {
-        validateUpdateRequest(id, requestProductDto.getDetailCategoryId());
+    public ProductResponseDto updateProduct(Long id, ProductRequestDto productRequestDto) {
+        validateUpdateRequest(id, productRequestDto.getDetailCategoryId());
 
         Product product = findProduct(id);
-        checkPasswordCorrect(requestProductDto.getPassword(), product.getPassword());
+        checkPasswordCorrect(productRequestDto.getPassword(), product.getPassword());
 
-        if (isDetailCategoryUpdate(id, requestProductDto.getDetailCategoryId())) {
-            DetailCategory detailCategory = findDetailCategory(requestProductDto.getDetailCategoryId());
+        if (isDetailCategoryUpdate(id, productRequestDto.getDetailCategoryId())) {
+            DetailCategory detailCategory = findDetailCategory(productRequestDto.getDetailCategoryId());
             product.setDetailCategory(detailCategory);
         }
 
-        product.update(requestProductDto);
-        return ResponseProductDto.ofProduct(product);
+        product.update(productRequestDto);
+        return ProductResponseDto.ofProduct(product);
     }
 
     @Override
     @Transactional
-    public void deleteProduct(Long id, RequestProductDto requestProductDto) {
+    public void deleteProduct(Long id, ProductRequestDto productRequestDto) {
         validateDeleteRequest(id);
 
         Product product = findProduct(id);
-        checkPasswordCorrect(requestProductDto.getPassword(), product.getPassword());
+        checkPasswordCorrect(productRequestDto.getPassword(), product.getPassword());
 
         deleteProductById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResponseProductDto> getProducts() {
+    public List<ProductResponseDto> getProducts() {
         List<Product> products = findProducts();
         return convProductsToResponses(products);
     }
 
-    private void validateCreateRequest(RequestProductDto requestProductDto) {
-        if (requestProductDto.getDetailCategoryId() == null) {
+    private void validateCreateRequest(ProductRequestDto productRequestDto) {
+        if (productRequestDto.getDetailCategoryId() == null) {
             throw new IllegalArgumentException("ID must not be null.");
         }
 
-        checkProductNameDuplicated(requestProductDto.getName());
+        checkProductNameDuplicated(productRequestDto.getName());
     }
 
     private void validateUpdateRequest(Long productId, Long detailCategoryId) {
@@ -107,8 +107,8 @@ public class ProductServiceImpl implements ProductService{
                 .orElseThrow(() -> new IllegalArgumentException("Invalid detail category id : " + detailCategoryId));
     }
 
-    private Product createProductFromDto(RequestProductDto requestProductDto, DetailCategory detailCategory) {
-        Product product = requestProductDto.toProduct(detailCategory);
+    private Product createProductFromDto(ProductRequestDto productRequestDto, DetailCategory detailCategory) {
+        Product product = productRequestDto.toProduct(detailCategory);
         return productRepository.save(product);
     }
 
@@ -135,9 +135,9 @@ public class ProductServiceImpl implements ProductService{
         productRepository.deleteById(id);
     }
 
-    private List<ResponseProductDto> convProductsToResponses(List<Product> products) {
+    private List<ProductResponseDto> convProductsToResponses(List<Product> products) {
         return products.stream()
-                .map(ResponseProductDto::ofProduct)
+                .map(ProductResponseDto::ofProduct)
                 .toList();
     }
 }
