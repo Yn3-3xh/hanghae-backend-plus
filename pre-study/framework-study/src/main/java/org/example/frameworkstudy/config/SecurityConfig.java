@@ -32,8 +32,8 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers(HttpMethod.POST, "/api/v1/members/sign-up").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/v1/members/sign-in").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/sign-up").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/sign-in").permitAll()
                                 .requestMatchers("/**").permitAll() // 권한이 필요한 API 테스트
                                 .anyRequest().authenticated())
 //                .logout((logout) -> logout

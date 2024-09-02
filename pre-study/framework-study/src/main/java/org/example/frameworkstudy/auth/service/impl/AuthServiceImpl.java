@@ -2,7 +2,6 @@ package org.example.frameworkstudy.auth.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.frameworkstudy.auth.dto.AuthResponseDto;
-import org.example.frameworkstudy.auth.entity.AuthMember;
 import org.example.frameworkstudy.auth.dto.AuthRequestDto;
 import org.example.frameworkstudy.auth.service.AuthService;
 import org.example.frameworkstudy.auth.token.JwtProvider;
@@ -27,8 +26,7 @@ public class AuthServiceImpl implements AuthService {
         Authentication authentication = authenticationMember(authRequestDto);
         JwtToken jwtToken = jwtProvider.generateToken(authentication);
 
-        AuthMember authMember = generateAuthMember(authentication, jwtToken);
-        return AuthResponseDto.ofAuth(authMember);
+        return generateAuthResponseDto(authentication, jwtToken);
     }
 
     private Authentication authenticationMember(AuthRequestDto authRequestDto) {
@@ -39,13 +37,11 @@ public class AuthServiceImpl implements AuthService {
         return authenticationManager.authenticate(authenticationToken);
     }
 
-    private AuthMember generateAuthMember(Authentication authentication, JwtToken jwtToken) {
+    private AuthResponseDto generateAuthResponseDto(Authentication authentication, JwtToken jwtToken) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String accessToken = jwtToken.getAccessToken();
+        String refreshToken = jwtToken.getRefreshToken();
 
-        AuthMember memberDetail = new AuthMember(userDetails);
-        memberDetail.setAccessToken(jwtToken.getAccessToken());
-        memberDetail.setRefreshToken(jwtToken.getRefreshToken());
-
-        return memberDetail;
+        return AuthResponseDto.ofAuth(userDetails, accessToken, refreshToken);
     }
 }

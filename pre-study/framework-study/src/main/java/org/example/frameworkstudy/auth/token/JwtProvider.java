@@ -25,7 +25,7 @@ public class JwtProvider {
 
     private final Key key;
     private final long ACCESS_TOKEN_MILLISECONDS = 1000 * 60 * 30;
-    private final long REFRESH_TOKEN_MILLISECONDS = 1000 * 60 * 60 * 24;
+    private final long REFRESH_TOKEN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7;
 
     public JwtProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
