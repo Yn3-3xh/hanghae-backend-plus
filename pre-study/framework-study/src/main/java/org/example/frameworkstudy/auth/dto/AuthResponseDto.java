@@ -3,6 +3,7 @@ package org.example.frameworkstudy.auth.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,20 +14,13 @@ import java.util.List;
 @Builder
 public class AuthResponseDto {
 
-    private String name;
+    private String username;
     private List<String> authority;
 
-    private String accessToken;
-    private String refreshToken;
-
-    public static AuthResponseDto ofAuth(UserDetails userDetails, String accessToken, String refreshToken) {
+    public static AuthResponseDto ofAuth(AuthMemberResponseDto authMemberResponseDto) {
         return AuthResponseDto.builder()
-                .name(userDetails.getUsername())
-                .authority(userDetails.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .toList())
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
+                .username(authMemberResponseDto.getUsername())
+                .authority(authMemberResponseDto.getAuthority())
                 .build();
     }
 }

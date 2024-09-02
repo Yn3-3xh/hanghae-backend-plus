@@ -1,6 +1,7 @@
 package org.example.frameworkstudy.auth.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.frameworkstudy.auth.dto.AuthMemberResponseDto;
 import org.example.frameworkstudy.auth.dto.AuthResponseDto;
 import org.example.frameworkstudy.auth.dto.AuthRequestDto;
 import org.example.frameworkstudy.auth.service.AuthService;
@@ -22,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional(readOnly = true)
-    public AuthResponseDto signIn(AuthRequestDto authRequestDto) {
+    public AuthMemberResponseDto signIn(AuthRequestDto authRequestDto) {
         Authentication authentication = authenticationMember(authRequestDto);
         JwtToken jwtToken = jwtProvider.generateToken(authentication);
 
@@ -37,11 +38,11 @@ public class AuthServiceImpl implements AuthService {
         return authenticationManager.authenticate(authenticationToken);
     }
 
-    private AuthResponseDto generateAuthResponseDto(Authentication authentication, JwtToken jwtToken) {
+    private AuthMemberResponseDto generateAuthResponseDto(Authentication authentication, JwtToken jwtToken) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String accessToken = jwtToken.getAccessToken();
         String refreshToken = jwtToken.getRefreshToken();
 
-        return AuthResponseDto.ofAuth(userDetails, accessToken, refreshToken);
+        return AuthMemberResponseDto.ofAuthMember(userDetails, accessToken, refreshToken);
     }
 }
