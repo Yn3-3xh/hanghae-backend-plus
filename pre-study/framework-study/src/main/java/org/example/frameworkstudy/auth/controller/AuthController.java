@@ -28,12 +28,10 @@ public class AuthController {
         ResponseDto<AuthResponseDto> responseDto = ResponseDto.ofSuccess("SignIn Success.", authResponseDto);
 
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .ok()
                 .headers(headers)
                 .body(responseDto);
     }
-
-    // 로그아웃
 
     private HttpHeaders createAuthHeader(AuthMemberResponseDto authMemberResponseDto) {
         HttpHeaders headers = new HttpHeaders();

@@ -2,7 +2,6 @@ package org.example.frameworkstudy.auth.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.frameworkstudy.auth.dto.AuthMemberResponseDto;
-import org.example.frameworkstudy.auth.dto.AuthResponseDto;
 import org.example.frameworkstudy.auth.dto.AuthRequestDto;
 import org.example.frameworkstudy.auth.service.AuthService;
 import org.example.frameworkstudy.auth.token.JwtProvider;
